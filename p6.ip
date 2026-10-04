@@ -1,0 +1,55 @@
+import sqlite3
+
+# Connect to database
+connection = sqlite3.connect("my_database.db")
+cursor = connection.cursor()
+
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS students (
+        id INT PRIMARY KEY,
+        name TEXT,
+        age INT,
+        course TEXT
+    )
+""")
+
+sql = "INSERT OR IGNORE INTO students (id, name, age, course) VALUES (?, ?, ?, ?)"
+values = [
+    (1, "Pal", 20, "Python"),
+    (2, "Aarya", 21, "Java"),
+    (3, "Nancy", 19, "C++")
+]
+
+cursor.executemany(sql, values)
+connection.commit()
+print("Student inserted !!")
+
+cursor.execute("SELECT * FROM students")
+students = cursor.fetchall()
+for student in students:
+    print(student)
+
+sql = "UPDATE students SET name = ?, age = ?, course = ? WHERE id = ?"
+values = ("Nancy", 22, "MySQL", 3)
+cursor.execute(sql, values)
+connection.commit()
+print("Student record updated !!")
+
+cursor.execute("SELECT * FROM students")
+students = cursor.fetchall()
+for student in students:
+    print(student)
+
+sql = "DELETE FROM students WHERE id = ?"
+student_id = (2,)
+cursor.execute(sql, student_id)
+connection.commit()
+print("Student record deleted !!")
+
+cursor.execute("SELECT * FROM students")
+students = cursor.fetchall()
+for student in students:
+    print(student)
+
+cursor.close()
+connection.close()
