@@ -1,0 +1,43 @@
+
+try:
+    import importlib
+    pd = importlib.import_module("pandas")
+except ModuleNotFoundError as exc:
+    raise ImportError("pandas is required. Install it with: pip install pandas") from exc
+
+df = pd.read_csv("employee.csv")
+
+print("Top 5 Records:", df.head())
+print("Bottom 5 Records:", df.tail())
+
+int_columns = df.select_dtypes(include=["int", "Int64"]).columns
+print("Integer Datatype Columns:", int_columns.tolist())
+
+print("Maximum Monthly Income:", df["MonthlyIncome"].max())
+print("Minimum Monthly Income:", df["MonthlyIncome"].min())
+
+print("Measure of Central Tendency:")
+print("Mean of Monthly Income:", df["MonthlyIncome"].mean())
+print("Median of Monthly Income:", df["MonthlyIncome"].median())
+print("Mode of Monthly Income:", df["MonthlyIncome"].mode().iloc[0])
+
+print("Measure of spread:")
+print("Range of Monthly Income:", df["MonthlyIncome"].max() - df["MonthlyIncome"].min())
+print("Variance:", round(df["MonthlyIncome"].var(), 2))
+print("Standard Deviation:", round(df["MonthlyIncome"].std(), 2))
+
+q1 = df["MonthlyIncome"].quantile(0.25)
+q2 = df["MonthlyIncome"].quantile(0.50)
+q3 = df["MonthlyIncome"].quantile(0.75)
+iqr = q3 - q1
+
+print("Quantile 1 (25%):", q1)
+print("Quantile 2 (50%):", q2)
+print("Quantile 3 (75%):", q3)
+print("Interquartile Range:", iqr)
+
+print("Correlation coefficient:")
+print(
+    "Age vs Monthly Income:",
+    df["Age"].corr(df["MonthlyIncome"]),
+)
