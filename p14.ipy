@@ -1,0 +1,116 @@
+# Data Loading
+try:
+    import pandas as pd  # type: ignore[import-not-found]
+except ImportError:
+    import subprocess
+    import sys
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "pandas"])
+    import pandas as pd  # type: ignore[import-not-found]
+
+df = pd.read_csv("Recipe Reviews and User Feedback Dataset.csv")
+features = [
+    "user_reputation",
+    "reply_count",
+    "thumbs_up",
+    "thumbs_down",
+    "best_score"
+]
+X = df[features]
+y = df["stars"]
+print("Dataset Shape:", df.shape)
+print("Total Records:", len(df))
+print("Feature Count:", X.shape[1])
+print("Prediction Target: stars")
+print("\nSample Records:")
+print(X.head())
+
+# data cleaning
+print("Missing Values in Dataset:")
+print(df.isnull().sum())
+data = df.copy()
+initial_count = len(data)
+data_cleaned = data.dropna().drop_duplicates().reset_index(drop=True)
+print("\nInitial Records :", initial_count)
+print("Cleaned Records :", len(data_cleaned))
+print("Records Removed :", initial_count - len(data_cleaned))
+X = data_cleaned[features]
+y = data_cleaned["stars"]
+
+# data spliting
+try:
+    from sklearn.model_selection import train_test_split  # type: ignore[import-not-found]
+except ImportError:
+    import subprocess
+    import sys
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "scikit-learn"])
+    from sklearn.model_selection import train_test_split  # type: ignore[import-not-found]
+
+y_binary = (y >= 4).astype(int)
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y_binary,
+    test_size=0.20,
+    random_state=42,
+    stratify=y_binary
+)
+print("Total Records :", len(X))
+print("Training Records :", len(X_train))
+print("Testing Records :", len(X_test))
+print("Number of Features :", X_train.shape[1])
+
+# model training
+try:
+    from sklearn.ensemble import RandomForestClassifier  # type: ignore[import-not-found]
+except ImportError:
+    import subprocess
+    import sys
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "scikit-learn"])
+    from sklearn.ensemble import RandomForestClassifier  # type: ignore[import-not-found]
+
+model = RandomForestClassifier(
+    n_estimators=100,
+    random_state=42
+)
+model.fit(X_train, y_train)
+print("Model Training Completed Successfully!")
+print("Model:", model)
+
+# model evalution
+try:
+    from sklearn.metrics import accuracy_score, confusion_matrix, classification_report  # type: ignore[import-not-found]
+except ImportError:
+    import subprocess
+    import sys
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "scikit-learn"])
+    from sklearn.metrics import accuracy_score, confusion_matrix, classification_report  # type: ignore[import-not-found]
+
+y_pred = model.predict(X_test)
+
+accuracy = accuracy_score(y_test, y_pred)
+
+print("Model Accuracy:", round(accuracy * 100, 2), "%")
+
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+print("\nClassification Report:")
+print(classification_report(
+    y_test,
+    y_pred,
+    target_names=["Low Rating (0)", "Good Rating (1)"]
+))
+
+# prediction
+sample_review = X_test.iloc[[0]]
+
+actual_class = y_test.iloc[0]
+predicted_class = model.predict(sample_review)[0]
+
+print("Sample Review Features:")
+print(sample_review)
+
+print("\nActual Rating Class:",
+      "Good (1)" if actual_class == 1 else "Low (0)")
+
+print("Predicted Rating Class:",
+      "Good (1)" if predicted_class == 1 else "Low (0)")
