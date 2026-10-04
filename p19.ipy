@@ -1,0 +1,38 @@
+import pandas as pd  # type: ignore[reportMissingModuleSource]
+# Load dataset
+df = pd.read_csv("diabetic_data.csv", na_values="?")
+
+# 1. Slicing
+print("Slicing:")
+print(df.loc[0:4, ["race", "gender", "age", "time_in_hospital"]])
+
+# 2. Filtering
+print("Filtering:")
+filtered = df[df["time_in_hospital"] > 5]
+print(filtered[["age", "gender", "time_in_hospital"]].head())
+
+# 3. Sorting
+print("Sorting:")
+sorted_df = df.sort_values("num_medications", ascending=False)
+print(sorted_df[["age", "num_medications"]].head())
+
+# 4. Concatenating
+part1 = df[["encounter_id", "age", "gender"]].head(5)
+part2 = df[["encounter_id", "age", "gender"]].tail(5)
+
+combined = pd.concat([part1, part2])
+print("Concatenated Data:")
+print(combined)
+
+# 5. Aggregating
+print("Aggregation:")
+aggregation = df.groupby("gender")["time_in_hospital"].agg(["mean", "min", "max", "count"])
+print(aggregation)
+
+# 6. Normalizing
+print("Normalization:")
+df["normalized_medications"] = (
+    (df["num_medications"] - df["num_medications"].min()) /
+    (df["num_medications"].max() - df["num_medications"].min())
+)
+print(df[["num_medications", "normalized_medications"]].head())
