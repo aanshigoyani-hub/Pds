@@ -1,0 +1,45 @@
+
+# without argument without return type
+def greet():
+    print("Hello world")
+
+greet()
+
+# with argument without return type
+def greet(name):
+    print("Hello", name)
+
+greet("Pal")
+
+# without argument with return type
+def add():
+    a = 6
+    b = 4
+    return a + b
+
+sum_val = add()
+print("Addition: ", sum_val)
+
+# with argument with return type
+def add(a, b):
+    return a + b
+
+sum_val = add(6, 4)
+print("Addition: ", sum_val)
+
+# default argument
+def greet(name="Pal"):
+    print("Hello", name)
+
+greet()
+
+# math,random and statistics function
+import math
+import random
+import statistics
+
+print("Square root of 49: ", math.sqrt(49))
+print("Factorial of 6: ", math.factorial(6))
+print("Random integer [10, 99]: ", random.randint(10, 99))
+num_list = [10, 20, 30, 40, 50, 70]
+print("Mean: ", statistics.mean(num_list))
