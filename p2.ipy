@@ -1,0 +1,42 @@
+# tuple
+t1 = (15, 25, 35, 25, 45)
+print("Tuple: ", t1)
+print("Count of 25: ", t1.count(25))
+print("Index of 35: ", t1.index(35))
+print("Length: ", len(t1))
+print("Slice: ", t1[1:4])
+
+# set
+s1 = {2, 4, 6, 8}
+s2 = {6, 8, 10, 12}
+s1.add(14)
+print("Set 1: ", s1)
+s1.remove(2)
+print("Set 1: ", s1)
+print("Union: ", s1.union(s2))
+print("Intersect: ", s1.intersection(s2))
+print("Difference: ", s1.difference(s2))
+print("Symmetric Difference: ", s1.symmetric_difference(s2))
+print("Subset: ", {4, 6}.issubset(s1))
+print("Disjoint: ", s1.isdisjoint({20, 30}))
+
+# dictionary
+d1 = {"name": "Pal", "age": 20, "city": "Surat"}
+print("Keys: ", list(d1.keys()))
+print("Values: ", list(d1.values()))
+print("Items: ", list(d1.items()))
+print("Get age: ", d1.get("age"))
+print("Pop city: ", d1.pop("city"))
+d1.update({"branch": "AI"})
+print("Dict: ", d1)
+
+# string
+s1 = "data science"
+print("Upper: ", s1.upper())
+print("Lower: ", s1.lower())
+print("Title: ", s1.title())
+print("Strip: ", s1.strip())
+print("Replace: ", s1.replace("data", "computer"))
+print("Find: ", s1.find("science"))
+print("Split: ", s1.split())
+print("Join: ", "-".join(["x", "y", "z"]))
