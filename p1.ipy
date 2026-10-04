@@ -1,0 +1,97 @@
+
+# variable and data type
+a = 20
+b = 5.5
+c = "Hello"
+d = True
+
+print(a, type(a))
+print(b, type(b))
+print(c, type(c))
+print(d, type(d))
+
+# arithmetic operator
+a = 18
+b = 5
+
+print("Addition: ", a + b)
+print("Subtraction: ", a - b)
+print("Multiplication: ", a * b)
+print("Division: ", a / b)
+print("Modulus: ", a % b)
+print("Exponential: ", a ** b)
+print("Floor Division: ", a // b)
+
+# assignment operator
+a = 20
+print("a is: ", a)
+a += 7
+print("a += 7: ", a)
+a -= 4
+print("a -= 4: ", a)
+a *= 3
+print("a *= 3: ", a)
+a /= 5
+print("a /= 5: ", a)
+a %= 5
+print("a %= 5: ", a)
+
+# comparison operator
+a = 6
+b = 4
+
+print("a == b: ", a == b)
+print("a >= b: ", a >= b)
+print("a <= b: ", a <= b)
+print("a > b: ", a > b)
+print("a < b: ", a < b)
+print("a != b: ", a != b)
+
+# logical operator
+a = 6
+b = 4
+
+print(a > 5 and b < 10)
+print(a > 15 or b < 10)
+print(not (a > 5))
+
+# membership operator
+fruits = ["apple", "mango"]
+
+print("apple in fruits: ", "apple" in fruits)
+print("Orange not in fruits: ", "Orange" not in fruits)
+print("Kiwi in fruits: ", "kiwi" in fruits)
+
+# identity operator
+a = [1, 2, 3]
+b = a
+c = [1, 2, 3]
+
+print("a is b: ", a is b)
+print("a is c: ", a is c)
+print("a is not c: ", a is not c)
+
+# bitwise operator
+a = 10
+b = 3
+
+print("AND: ", a & b)
+print("OR: ", a | b)
+print("XOR: ", a ^ b)
+print("Left Shift: ", a << 1)
+print("Right Shift: ", a >> 1)
+print("Not a: ", ~a)
+
+l1 = [15, 25, 35, 25, 45]
+l1.append(55)
+l1.insert(1, 10)
+l1.extend([65, 75])
+l1.remove(25)
+print("List: ", l1)
+print("Pop: ", l1.pop())
+print("Index of 35: ", l1.index(35))
+print("Count of 25: ", l1.count(25))
+l1.reverse()
+print("Reversed: ", l1)
+l1.sort()
+print("Sorted: ", l1)
