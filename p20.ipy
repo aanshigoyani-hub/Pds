@@ -1,0 +1,60 @@
+import importlib
+import importlib.util
+import subprocess
+import sys
+
+# Ensure required packages are available before use.
+for package in ("pandas", "matplotlib"):
+    if importlib.util.find_spec(package) is None:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+pd = importlib.import_module("pandas")
+plt = importlib.import_module("matplotlib.pyplot")
+
+df = pd.read_csv("diabetic_data.csv", na_values="?")
+
+# line plot
+mean_stay = df.groupby("age")["time_in_hospital"].mean()
+plt.figure(figsize=(8, 5))
+plt.plot(mean_stay.index, mean_stay.values, marker="o")
+plt.title("Average Hospital Stay by Age")
+plt.xlabel("Age Group")
+plt.ylabel("Average Hospital Stay")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+# bar chart
+admission_count = df["admission_type_id"].value_counts().sort_index()
+plt.figure(figsize=(8, 5))
+plt.bar(admission_count.index.astype(str), admission_count.values)
+plt.title("Patients by Admission Type")
+plt.xlabel("Admission Type ID")
+plt.ylabel("Number of Patients")
+plt.show()
+
+# histogram
+plt.figure(figsize=(7, 5))
+plt.hist(df["num_medications"].dropna(), bins=20)
+plt.title("Distribution of Number of Medications")
+plt.xlabel("Number of Medications")
+plt.ylabel("Frequency")
+plt.show()
+
+# pie chart
+readmitted = df["readmitted"].value_counts()
+plt.figure(figsize=(7, 5))
+plt.pie(readmitted.values,
+        labels=readmitted.index,
+        autopct="%1.1f%%")
+plt.title("Readmission Distribution")
+plt.show()
+
+# scatter plot
+sample = df[["num_lab_procedures", "num_medications"]].dropna().head(1000)
+plt.figure(figsize=(7, 5))
+plt.scatter(sample["num_lab_procedures"], sample["num_medications"], alpha=0.5)
+plt.title("Lab Procedures vs Medications")
+plt.xlabel("Number of Lab Procedures")
+plt.ylabel("Number of Medications")
+plt.show()
