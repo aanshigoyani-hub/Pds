@@ -1,0 +1,47 @@
+# text file
+f1 = open("message.txt", "w")
+f1.write("Welcome to Python programming\n")
+f1.write("File Handling in Python")
+f1.close()
+
+f1 = open("message.txt", "r")
+print("After Writing: ")
+print(f1.read())
+f1.close()
+
+f1 = open("message.txt", "a")
+f1.write("This is appended line\n")
+f1.close()
+
+# csv file
+import csv
+
+data = [["Id", "Students", "Score"],
+        [101, "Pal", 90],
+        [102, "Aarya", 85],
+        [103, "Nancy", 76]]
+
+f1 = open("marks.csv", "w", newline="")
+writer = csv.writer(f1)
+writer.writerows(data)
+f1.close()
+
+f1 = open("marks.csv", "r")
+reader = csv.reader(f1)
+for row in reader:
+    print(row)
+f1.close()
+
+# binary file
+bl = open("sample.bin", "wb")
+bl.write(b"Python Binary Data")
+bl.close()
+
+bl = open("sample.bin", "rb")
+print("After writting: ")
+print(bl.read())
+bl.close()
+
+bl = open("sample.bin", "ab")
+bl.write(b"\nAppended Data")
+bl.close()
